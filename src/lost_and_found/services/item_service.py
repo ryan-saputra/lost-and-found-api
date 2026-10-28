@@ -1,14 +1,14 @@
 
-from sqlalchemy.orm import Session
-
 from lost_and_found.models.item import ItemReport
-from lost_and_found.repositories.item_repository import ItemRepository
+from lost_and_found.repositories.item_repository_interface import (
+    ItemRepositoryInterface,
+)
 from lost_and_found.schemas.item import ItemReportCreate
 
 
 class ItemService:
-    def __init__(self, session: Session):
-        self.repository = ItemRepository(session)
+    def __init__(self, repository: ItemRepositoryInterface):
+        self.repository = repository
 
     def create_report(self, item_data: ItemReportCreate) -> ItemReport:
         return self.repository.create(item_data)
